@@ -12,7 +12,7 @@ import com.example.spacexfuncompose.customcomponent.RoundedImageComponent
 import com.example.spacexfuncompose.customcomponent.SimpleText
 import com.example.spacexfuncompose.customcomponent.SpacerBig
 import com.example.spacexfuncompose.customcomponent.SpacerMedium
-import com.example.spacexfuncompose.data.SpaceXViewItem
+import com.example.spacexfuncompose.model.AllRocketsResponseItem
 import com.example.spacexfuncompose.ui.theme.Dimens
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.lightGray
@@ -20,7 +20,7 @@ import com.example.spacexfuncompose.ui.theme.lightGray
 
 @Composable
 fun SpaceXFunItem(
-    spaceXViewItem: SpaceXViewItem
+    spaceXViewItem: AllRocketsResponseItem
 ) {
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),
@@ -28,7 +28,7 @@ fun SpaceXFunItem(
         verticalArrangement = Arrangement.Center
     ) {
         RoundedImageComponent(
-            spaceXViewItem.imageURL,
+            spaceXViewItem.flickr_images[0],
             modifier = Modifier
                 //.clip(shape = RoundedCornerShape(Dimens.dimen_2))
                 .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
@@ -48,11 +48,11 @@ fun SpaceXFunItem(
         ) {
             Column {
                 SimpleText(
-                    text = spaceXViewItem.spaceXTitle,
+                    text = spaceXViewItem.name,
                     modifier = Modifier.align(CenterHorizontally)
                 )
                 SpacerMedium()
-                SimpleText(text = spaceXViewItem.spaceXDescription)
+                SimpleText(text = spaceXViewItem.description)
                 SpacerBig()
             }
         }

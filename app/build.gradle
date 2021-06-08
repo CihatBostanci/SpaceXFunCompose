@@ -84,6 +84,12 @@ dependencies {
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
+    //Compose Live Data
+    implementation "androidx.compose.runtime:runtime:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
+
+
 }
 kapt {
     correctErrorTypes true

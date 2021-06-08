@@ -1,6 +1,7 @@
 package com.example.spacexfuncompose.di
 
 import com.example.spacexfuncompose.BuildConfig
+import com.example.spacexfuncompose.spacex.SpaceXService
 import com.example.spacexfuncompose.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -45,11 +46,12 @@ class ApplicationModule {
             .client(okHttpClient)
             .build()
 
-    /*@Provides
+    @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ChatApiService =
-        retrofit.create(ChatApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): SpaceXService =
+        retrofit.create(SpaceXService::class.java)
 
+    /*
     @Provides
     @Singleton
     fun provideApiHelper(chatHelperImpl: ChatHelperImpl): ChatHelper = chatHelperImpl*/

@@ -4,26 +4,27 @@ import android.graphics.Point
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.activity.viewModels
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.spacexfuncompose.component.SpaceXFunItem
-import com.example.spacexfuncompose.data.SpaceXViewItem
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import com.example.spacexfuncompose.model.AllRocketsResponseItem
+import com.example.spacexfuncompose.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
-import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme
-import android.util.DisplayMetrics
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager.displayMetrics
+import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val viewModel: SpaceXViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         screenSizeArranger()
+        //callService()
         setContent {
             SpaceXFunComposeTheme {
                 Scaffold(
@@ -33,11 +34,19 @@ class MainActivity : ComponentActivity() {
                     content = {
                         // A surface container using the 'background' color from the theme
                         Surface(color = MaterialTheme.colors.background) {
-                            SpaceXFun()
+                            viewModel.getSpaceXRockets()
+                            val items: List<AllRocketsResponseItem> by viewModel.rocketList.observeAsState(listOf())
+                            SpaceXFun(items)
                         }
                     }
                 )
             }
+        }
+    }
+
+    private fun callService() {
+        viewModel.run {
+           // getSpaceXRockets()
         }
     }
 
@@ -52,42 +61,5 @@ class MainActivity : ComponentActivity() {
             ScreenSizeManager.screenHeightDp = it.heightPixels / it.density
             ScreenSizeManager.screenWidthDp = it.widthPixels / it.density
         }
-
-
-    }
-}
-
-@Composable
-fun SpaceXFun() {
-    val list = listOf(
-        SpaceXViewItem(
-            imageURL = "https://imgur.com/DaCfMsj.jpg",
-            spaceXTitle = "Falcon1",
-            spaceXDescription = "Test Description"
-        ), SpaceXViewItem(
-            imageURL = "https://imgur.com/azYafd8.jpg",
-            spaceXTitle = "Falcon1",
-            spaceXDescription = "Test Description"
-        )
-    )
-    LazyRow {
-        itemsIndexed(list) { index, item ->
-            SpaceXFunItem(spaceXViewItem = item)
-        }
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    SpaceXFunComposeTheme {
-        SpaceXFunItem(
-            SpaceXViewItem(
-                imageURL = "https://picsum.photos/300/300",
-                spaceXTitle = "Falcon1",
-                spaceXDescription = "Test Description"
-            )
-        )
     }
 }
