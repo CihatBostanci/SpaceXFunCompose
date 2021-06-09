@@ -2,6 +2,7 @@ package com.example.spacexfuncompose.di
 
 import com.example.spacexfuncompose.spacex.SpaceXService
 import com.example.spacexfuncompose.spacex.data.SpaceXRepository
+import com.example.spacexfuncompose.spacex.domain.SpaceXUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +17,8 @@ object RepositoryModule {
     @ActivityRetainedScoped
     fun provideSpaceXRepository(service: SpaceXService) = SpaceXRepository(service)
 
-    /*@Provides
+    @Provides
     @ActivityRetainedScoped
     fun provideSpaceXUseCase(repository: SpaceXRepository) = SpaceXUseCase(repository)
-    */
+
 }

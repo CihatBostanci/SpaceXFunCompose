@@ -53,10 +53,6 @@ class ApplicationModule {
     fun provideApiService(retrofit: Retrofit): SpaceXService =
         retrofit.create(SpaceXService::class.java)
 
-    /*
-    @Provides
-    @Singleton
-    fun provideApiHelper(chatHelperImpl: ChatHelperImpl): ChatHelper = chatHelperImpl*/
 
 
 }

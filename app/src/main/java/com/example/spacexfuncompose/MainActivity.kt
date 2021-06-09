@@ -18,12 +18,14 @@ import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme
 import com.example.spacexfuncompose.utils.IntentUtil
 import com.example.spacexfuncompose.utils.observeLiveData
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.InternalCoroutinesApi
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: SpaceXViewModel by viewModels()
 
+    @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,6 +41,7 @@ class MainActivity : ComponentActivity() {
                         Surface(color = MaterialTheme.colors.background) {
                             viewModel.run {
                                 getSpaceXRockets()
+                            }
                                 /*observeLiveData(rocketList) {
                                     val dataModel = IntentUtil.gson.fromJson(
                                         it.charStream(), AllRocketListResponse::class.java
@@ -47,7 +50,7 @@ class MainActivity : ComponentActivity() {
 
                                 }*/
                                 SpaceXFun(viewModel )
-                            }
+
                         }
                     }
                 )
