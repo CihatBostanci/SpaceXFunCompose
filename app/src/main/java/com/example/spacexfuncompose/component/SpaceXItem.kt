@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,7 +11,7 @@ import com.example.spacexfuncompose.customcomponent.RoundedImageComponent
 import com.example.spacexfuncompose.customcomponent.SimpleText
 import com.example.spacexfuncompose.customcomponent.SpacerBig
 import com.example.spacexfuncompose.customcomponent.SpacerMedium
-import com.example.spacexfuncompose.model.AllRocketsResponseItem
+import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.ui.theme.Dimens
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.lightGray
@@ -20,7 +19,7 @@ import com.example.spacexfuncompose.ui.theme.lightGray
 
 @Composable
 fun SpaceXFunItem(
-    spaceXViewItem: AllRocketsResponseItem
+    spaceXViewItem: AllRocketResponse
 ) {
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),
@@ -48,7 +47,7 @@ fun SpaceXFunItem(
         ) {
             Column {
                 SimpleText(
-                    text = spaceXViewItem.name,
+                    text = spaceXViewItem.rocket_name,
                     modifier = Modifier.align(CenterHorizontally)
                 )
                 SpacerMedium()

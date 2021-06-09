@@ -88,6 +88,7 @@ dependencies {
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
+    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
 
 
 }

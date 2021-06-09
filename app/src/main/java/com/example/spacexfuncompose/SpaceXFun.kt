@@ -1,18 +1,24 @@
 package com.example.spacexfuncompose
 
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import com.example.spacexfuncompose.component.SpaceXFunItem
-import com.example.spacexfuncompose.model.AllRocketsResponseItem
+import com.example.spacexfuncompose.model.AllRocketResponse
+import com.example.spacexfuncompose.spacex.presentation.SpaceXViewModel
 
 
 @Composable
-fun SpaceXFun(items: List<AllRocketsResponseItem>) {
+fun SpaceXFun(viewModel: SpaceXViewModel) {
+
+    val itemList: List<AllRocketResponse> by viewModel.rocketList.observeAsState(listOf())
 
     LazyRow {
-        itemsIndexed(items = items) { _, item ->
-            SpaceXFunItem(spaceXViewItem = item)
+        items(itemList) { item ->
+            SpaceXFunItem(item)
         }
     }
     /*val list = listOf(

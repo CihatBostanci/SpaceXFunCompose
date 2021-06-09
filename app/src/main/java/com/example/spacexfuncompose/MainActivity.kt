@@ -2,17 +2,21 @@ package com.example.spacexfuncompose
 
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.*
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import com.example.spacexfuncompose.model.AllRocketsResponseItem
+import androidx.compose.runtime.saveable.listSaver
+import com.example.spacexfuncompose.model.AllRocketListResponse
+import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager.displayMetrics
 import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme
+import com.example.spacexfuncompose.utils.IntentUtil
+import com.example.spacexfuncompose.utils.observeLiveData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +28,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         screenSizeArranger()
-        //callService()
         setContent {
             SpaceXFunComposeTheme {
                 Scaffold(
@@ -34,9 +37,17 @@ class MainActivity : ComponentActivity() {
                     content = {
                         // A surface container using the 'background' color from the theme
                         Surface(color = MaterialTheme.colors.background) {
-                            viewModel.getSpaceXRockets()
-                            val items: List<AllRocketsResponseItem> by viewModel.rocketList.observeAsState(listOf())
-                            SpaceXFun(items)
+                            viewModel.run {
+                                getSpaceXRockets()
+                                /*observeLiveData(rocketList) {
+                                    val dataModel = IntentUtil.gson.fromJson(
+                                        it.charStream(), AllRocketListResponse::class.java
+                                    )
+                                    Log.d("Main", dataModel.toString())
+
+                                }*/
+                                SpaceXFun(viewModel )
+                            }
                         }
                     }
                 )
@@ -44,11 +55,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun callService() {
-        viewModel.run {
-           // getSpaceXRockets()
-        }
-    }
 
     private fun screenSizeArranger() {
         ScreenSizeManager.display = windowManager.defaultDisplay

@@ -1,16 +1,17 @@
 package com.example.spacexfuncompose.spacex.data
 
-import com.example.spacexfuncompose.model.AllRocketsResponseItem
 import com.example.spacexfuncompose.spacex.SpaceXService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class SpaceXRepository @Inject constructor(
     private val apiService: SpaceXService
 ) {
-    suspend fun getSpaceXRockets(): Flow<MutableList<AllRocketsResponseItem>> =
-        apiService.getAllRockets().flowOn(Dispatchers.IO)
+    suspend fun getSpaceXRockets() = flow {
+        delay(1000)
+        // Send a random fake weather forecast data
+        emit(apiService.getAllRockets())
+    }
 }
 

@@ -11,8 +11,6 @@ data class SecondStage(
     val fuel_amount_tons: Double,
     @SerializedName("payloads")
     val payloads: Payloads,
-    @SerializedName("reusable")
-    val reusable: Boolean,
     @SerializedName("thrust")
     val thrust: Thrust
 )

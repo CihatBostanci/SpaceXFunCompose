@@ -4,32 +4,34 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.spacexfuncompose.model.AllRocketsResponseItem
-import com.example.spacexfuncompose.spacex.domain.SpaceXUseCase
+import com.example.spacexfuncompose.model.AllRocketListResponse
+import com.example.spacexfuncompose.model.AllRocketResponse
+import com.example.spacexfuncompose.spacex.data.SpaceXRepository
+import com.example.spacexfuncompose.utils.IntentUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SpaceXViewModel @Inject constructor(
-    private val spaceXUseCase: SpaceXUseCase
+    private val spaceXRepository: SpaceXRepository
 ) : ViewModel() {
 
-    private var _rocketList: MutableLiveData<List<AllRocketsResponseItem>> = MutableLiveData()
-    val rocketList: LiveData<List<AllRocketsResponseItem>> get() = _rocketList
+    private var _rocketList: MutableLiveData<MutableList<AllRocketResponse>> = MutableLiveData()
+    val rocketList: LiveData<MutableList<AllRocketResponse>> get() = _rocketList
 
     private val _isRocketProgress: MutableLiveData<Boolean> = MutableLiveData(false)
     val isRocketProgress: LiveData<Boolean> get() = _isRocketProgress
 
     fun getSpaceXRockets() = viewModelScope.launch {
-        spaceXUseCase.invoke()
-            .onStart { _isRocketProgress.postValue(true) }
-            .onCompletion { _isRocketProgress.postValue(false) }
-            .catch { _isRocketProgress.postValue(false) }
-            .collect { _rocketList.postValue(it) }
-
-
+        spaceXRepository.getSpaceXRockets().collect {
+            _rocketList.postValue(
+                IntentUtil.gson.fromJson(
+                    it.charStream(), AllRocketListResponse::class.java
+                )
+            )
+        }
     }
 
 

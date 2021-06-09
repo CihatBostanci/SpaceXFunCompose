@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class Engines(
     @SerializedName("engine_loss_max")
     val engine_loss_max: Int,
-    @SerializedName("isp")
-    val isp: Isp,
     @SerializedName("layout")
     val layout: String,
     @SerializedName("number")

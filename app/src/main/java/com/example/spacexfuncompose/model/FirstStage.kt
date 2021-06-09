@@ -12,7 +12,7 @@ data class FirstStage(
     @SerializedName("reusable")
     val reusable: Boolean,
     @SerializedName("thrust_sea_level")
-    val thrust_sea_level: ThrustSeaLevel,
+    val thrust_sea_level: ThrustSeaLevelX,
     @SerializedName("thrust_vacuum")
-    val thrust_vacuum: ThrustVacuum
+    val thrust_vacuum: ThrustVacuumX
 )
