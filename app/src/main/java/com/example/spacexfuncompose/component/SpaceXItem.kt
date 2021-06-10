@@ -7,10 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.spacexfuncompose.customcomponent.RoundedImageComponent
-import com.example.spacexfuncompose.customcomponent.SimpleText
-import com.example.spacexfuncompose.customcomponent.SpacerBig
-import com.example.spacexfuncompose.customcomponent.SpacerMedium
+import com.example.spacexfuncompose.customcomponent.*
 import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.ui.theme.Dimens
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
@@ -46,8 +43,9 @@ fun SpaceXFunItem(
                 .align(CenterHorizontally)
         ) {
             Column {
-                SimpleText(
-                    text = spaceXViewItem.rocket_name,
+                SpacerSmall()
+                HeaderText(
+                    text = spaceXViewItem.name,
                     modifier = Modifier.align(CenterHorizontally)
                 )
                 SpacerMedium()

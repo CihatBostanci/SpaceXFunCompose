@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@InternalCoroutinesApi
 @HiltViewModel
 class SpaceXViewModel @Inject constructor(
     private val spaceXUseCase: SpaceXUseCase
@@ -28,7 +29,10 @@ class SpaceXViewModel @Inject constructor(
     private val _isRocketProgress: MutableLiveData<Boolean> = MutableLiveData(false)
     val isRocketProgress: LiveData<Boolean> get() = _isRocketProgress
 
-    @InternalCoroutinesApi
+    init {
+        getSpaceXRockets()
+    }
+
     fun getSpaceXRockets() = viewModelScope.launch {
         spaceXUseCase.invoke()
             .onStart { _isRocketProgress.postValue(true) }

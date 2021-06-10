@@ -38,8 +38,8 @@ data class AllRocketResponse(
     val flickr_images: MutableList<String>,
     @SerializedName("rocket_id")
     val rocket_id: String,
-    @SerializedName("rocket_name")
-    val rocket_name: String,
+    @SerializedName("name")
+    val name: String,
     @SerializedName("rocket_type")
     val rocket_type: String,
     @SerializedName("second_stage")
@@ -52,6 +52,6 @@ data class AllRocketResponse(
     val wikipedia: String
 ) : Serializable {
     override fun toString(): String {
-        return "AllRocketResponse(active=$active, boosters=$boosters, company='$company', cost_per_launch=$cost_per_launch, country='$country', description='$description', diameter=$diameter, engines=$engines, first_flight='$first_flight', first_stage=$first_stage, height=$height, id='$id', landing_legs=$landing_legs, mass=$mass, payload_weights=$payload_weights, flickr_images=$flickr_images, rocket_id='$rocket_id', rocket_name='$rocket_name', rocket_type='$rocket_type', second_stage=$second_stage, stages=$stages, success_rate_pct=$success_rate_pct, wikipedia='$wikipedia')"
+        return "AllRocketResponse(active=$active, boosters=$boosters, company='$company', cost_per_launch=$cost_per_launch, country='$country', description='$description', diameter=$diameter, engines=$engines, first_flight='$first_flight', first_stage=$first_stage, height=$height, id='$id', landing_legs=$landing_legs, mass=$mass, payload_weights=$payload_weights, flickr_images=$flickr_images, rocket_id='$rocket_id', name='$name', rocket_type='$rocket_type', second_stage=$second_stage, stages=$stages, success_rate_pct=$success_rate_pct, wikipedia='$wikipedia')"
     }
 }
