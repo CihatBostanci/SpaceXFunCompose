@@ -1,4 +1,4 @@
-package com.example.spacexfuncompose.spacex
+package com.example.spacexfuncompose.feature.spacex
 
 import com.example.spacexfuncompose.model.AllRocketListResponse
 import com.example.spacexfuncompose.utils.GET_ALL_ROCKETS

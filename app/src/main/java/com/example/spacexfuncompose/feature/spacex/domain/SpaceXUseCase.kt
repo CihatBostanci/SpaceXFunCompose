@@ -1,6 +1,6 @@
-package com.example.spacexfuncompose.spacex.domain
+package com.example.spacexfuncompose.feature.spacex.domain
 
-import com.example.spacexfuncompose.spacex.data.SpaceXRepository
+import com.example.spacexfuncompose.feature.spacex.data.SpaceXRepository
 import kotlinx.coroutines.flow.map
 
 class SpaceXUseCase(private val repository: SpaceXRepository) {

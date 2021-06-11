@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.*
-import com.example.spacexfuncompose.spacex.presentation.SpaceXViewModel
+import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager.displayMetrics
 import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme

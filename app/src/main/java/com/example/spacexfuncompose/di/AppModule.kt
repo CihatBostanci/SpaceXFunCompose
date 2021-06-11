@@ -1,7 +1,7 @@
 package com.example.spacexfuncompose.di
 
 import com.example.spacexfuncompose.BuildConfig
-import com.example.spacexfuncompose.spacex.SpaceXService
+import com.example.spacexfuncompose.feature.spacex.SpaceXService
 import com.example.spacexfuncompose.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -11,7 +11,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 

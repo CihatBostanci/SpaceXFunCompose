@@ -1,4 +1,4 @@
-package com.example.spacexfuncompose.spacex.presentation
+package com.example.spacexfuncompose.feature.spacex.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexfuncompose.model.AllRocketListResponse
 import com.example.spacexfuncompose.model.AllRocketResponse
-import com.example.spacexfuncompose.spacex.data.SpaceXRepository
-import com.example.spacexfuncompose.spacex.domain.SpaceXUseCase
+import com.example.spacexfuncompose.feature.spacex.data.SpaceXRepository
+import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
 import kotlinx.coroutines.flow.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi

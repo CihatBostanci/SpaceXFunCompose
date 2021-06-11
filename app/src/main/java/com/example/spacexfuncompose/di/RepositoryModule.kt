@@ -1,8 +1,8 @@
 package com.example.spacexfuncompose.di
 
-import com.example.spacexfuncompose.spacex.SpaceXService
-import com.example.spacexfuncompose.spacex.data.SpaceXRepository
-import com.example.spacexfuncompose.spacex.domain.SpaceXUseCase
+import com.example.spacexfuncompose.feature.spacex.SpaceXService
+import com.example.spacexfuncompose.feature.spacex.data.SpaceXRepository
+import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

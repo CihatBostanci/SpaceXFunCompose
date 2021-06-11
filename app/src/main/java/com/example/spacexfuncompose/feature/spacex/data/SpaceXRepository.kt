@@ -1,8 +1,6 @@
-package com.example.spacexfuncompose.spacex.data
+package com.example.spacexfuncompose.feature.spacex.data
 
-import com.example.spacexfuncompose.model.AllRocketListResponse
-import com.example.spacexfuncompose.spacex.SpaceXService
-import com.example.spacexfuncompose.utils.IntentUtil
+import com.example.spacexfuncompose.feature.spacex.SpaceXService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
