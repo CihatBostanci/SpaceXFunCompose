@@ -6,7 +6,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.*
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.rememberNavController
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
+import com.example.spacexfuncompose.feature.spacexdetail.SpaceXDetail
+import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager.displayMetrics
 import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme

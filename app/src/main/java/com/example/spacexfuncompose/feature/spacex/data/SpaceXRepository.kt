@@ -9,7 +9,7 @@ class SpaceXRepository @Inject constructor(
     private val apiService: SpaceXService
 ) {
     suspend fun getSpaceXRockets() = flow {
-        delay(1000)
+        delay(3000)
         // Send a random fake weather forecast data
         emit(
             //IntentUtil.gson.fromJson(
