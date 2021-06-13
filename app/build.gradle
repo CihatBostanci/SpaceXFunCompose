@@ -61,6 +61,7 @@ dependencies {
 
     //Coil
     implementation 'com.google.accompanist:accompanist-coil:0.11.1'
+    implementation 'io.coil-kt:coil-gif:1.2.2'
 
     //Material
     implementation "com.google.android.material:material:$materialVersion"

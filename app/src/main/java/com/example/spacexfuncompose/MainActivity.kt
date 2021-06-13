@@ -1,20 +1,19 @@
 package com.example.spacexfuncompose
 
+import android.annotation.SuppressLint
 import android.graphics.Point
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXFun
-import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.feature.spacexdetail.SpaceXDetail
-import com.example.spacexfuncompose.feature.spacexdetail.SpaceXDetailViewModel
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
@@ -27,9 +26,6 @@ import javax.inject.Inject
 @InternalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    private val viewModel: SpaceXViewModel by viewModels()
-    private val detailViewModel: SpaceXDetailViewModel by viewModels()
 
     @Inject
     lateinit var navigationManager: NavigationManager
@@ -56,18 +52,19 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("ComposableNaming")
     @Composable
     private fun mainScreen() {
         val navController = rememberNavController()
         NavHost(
             navController,
-            startDestination = NavigationDirections.spaceX.destination
+            startDestination = NavigationDirections.SpaceX.destination
         ) {
-            composable(NavigationDirections.spaceX.destination) {
-                SpaceXFun(viewModel)
+            composable(NavigationDirections.SpaceX.destination) {
+                SpaceXFun(hiltViewModel())
             }
-            composable(NavigationDirections.spaceXDetail.destination) {
-                SpaceXDetail(detailViewModel)
+            composable(NavigationDirections.SpaceXDetail.destination) {
+                SpaceXDetail(hiltViewModel())
             }
         }
         //observation of destination

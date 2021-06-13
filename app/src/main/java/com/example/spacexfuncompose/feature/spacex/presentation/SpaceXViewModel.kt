@@ -61,7 +61,7 @@ class SpaceXViewModel @Inject constructor(
 
     fun goToDetail() {
         Log.d(TAG, "Go To Detail")
-        navigationManager.navigate(NavigationDirections.spaceXDetail)
+        navigationManager.navigate(NavigationDirections.SpaceXDetail)
     }
 
 }

@@ -1,7 +1,7 @@
 package com.example.spacexfuncompose.customcomponent
 
 
-import android.R
+import com.example.spacexfuncompose.R
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -26,7 +26,7 @@ fun SimpleImageComponent(imageURL: String?) {
     ) {
         Image(
             painter = if (imageURL.isNullOrEmpty())
-                painterResource(R.drawable.ic_delete)
+                painterResource(R.drawable.ic_launcher_foreground)
             else
                 rememberCoilPainter(
                     request = imageURL
@@ -44,7 +44,7 @@ fun RoundedImageComponent(
     Card(modifier= modifier, RoundedCornerShape(Dimens.dimen_2)){
         Image(
             painter = if (imageURL.isNullOrEmpty())
-                painterResource(R.drawable.ic_delete)
+                painterResource(R.drawable.ic_launcher_foreground)
             else
                 rememberCoilPainter(
                     request = imageURL

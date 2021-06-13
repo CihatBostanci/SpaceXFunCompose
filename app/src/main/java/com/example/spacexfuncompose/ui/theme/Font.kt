@@ -18,12 +18,19 @@ val MyTypography = Typography(
         fontFamily = openSansFamily,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Italic,
-        fontSize = 20.sp
+        fontSize = 18.sp
     ),
     body1 = TextStyle(
         fontFamily = openSansFamily,
         fontWeight = FontWeight.Light,
         fontSize = 14.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = openSansFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp
     )
+
+
 
 )

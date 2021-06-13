@@ -1,18 +1,21 @@
 package com.example.spacexfuncompose.customcomponent
 
+import android.os.Build.VERSION.SDK_INT
 import android.util.Log
-import android.view.View
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import com.example.spacexfuncompose.ui.theme.Dimens
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContentProviderCompat.requireContext
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import com.example.spacexfuncompose.R
 
 private const val LOADING_TAG = "Loading Indicator"
 
@@ -23,7 +26,9 @@ fun ProgressLoadingIndicator(isDisplayed: Boolean?) {
             Log.d(LOADING_TAG, "On start")
             Column(
                 // imageview to center of the screen.
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
 
                 // below line is used for specifying
                 // vertical arrangement.
@@ -33,9 +38,16 @@ fun ProgressLoadingIndicator(isDisplayed: Boolean?) {
                 // horizontal arrangement.
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // below line is use to display
-                // a circular progress bar.
-                CircularProgressIndicator()
+                val context = LocalContext.current
+
+                val imageLoader = ImageLoader.Builder(context)
+                    .componentRegistry {
+                        if (SDK_INT >= 28) {
+                            add(ImageDecoderDecoder(context))
+                        } else {
+                            add(GifDecoder())
+                        }
+                    }.build()
             }
         }
     }

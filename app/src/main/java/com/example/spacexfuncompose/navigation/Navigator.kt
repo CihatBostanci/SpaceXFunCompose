@@ -17,14 +17,14 @@ interface NavigationCommand {
 
 object NavigationDirections {
 
-    val spaceX  = object : NavigationCommand {
+    val SpaceX  = object : NavigationCommand {
 
         override val arguments = emptyList<NamedNavArgument>()
 
         override val destination = "spaceX"
     }
 
-    val spaceXDetail = object : NavigationCommand {
+    val SpaceXDetail = object : NavigationCommand {
 
         override val arguments = emptyList<NamedNavArgument>()
 
@@ -36,6 +36,20 @@ object NavigationDirections {
         override val arguments = emptyList<NamedNavArgument>()
 
         override val destination = ""
+    }
+
+    val Favorite  = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = "favorite"
+    }
+
+    val UpComing  = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = "favorite"
     }
 }
 
