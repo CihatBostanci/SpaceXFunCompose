@@ -8,15 +8,13 @@ import androidx.activity.viewModels
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXFun
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.feature.spacexdetail.SpaceXDetail
 import com.example.spacexfuncompose.feature.spacexdetail.SpaceXDetailViewModel
-import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
@@ -50,13 +48,14 @@ class MainActivity : ComponentActivity() {
                     content = {
                         // A surface container using the 'background' color from the theme
                         Surface(color = MaterialTheme.colors.background) {
-                           mainScreen()
+                            mainScreen()
                         }
                     }
                 )
             }
         }
     }
+
     @Composable
     private fun mainScreen() {
         val navController = rememberNavController()

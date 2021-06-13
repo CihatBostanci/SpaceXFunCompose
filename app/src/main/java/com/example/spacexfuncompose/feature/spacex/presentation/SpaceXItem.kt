@@ -1,4 +1,4 @@
-package com.example.spacexfuncompose.component
+package com.example.spacexfuncompose.feature.spacex.presentation
 
 import android.util.Log
 import androidx.compose.foundation.clickable
@@ -16,7 +16,6 @@ import com.example.spacexfuncompose.ui.theme.Dimens
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.lightGray
 import kotlinx.coroutines.InternalCoroutinesApi
-
 
 @InternalCoroutinesApi
 @Composable
