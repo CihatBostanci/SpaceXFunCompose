@@ -1,40 +1,52 @@
 package com.example.spacexfuncompose.navigation
 
-import android.os.Parcelable
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.compose.runtime.toMutableStateList
+import android.util.Log
+import androidx.navigation.NavType
+import androidx.navigation.compose.NamedNavArgument
+import androidx.navigation.compose.navArgument
+import com.example.spacexfuncompose.navigation.NavigationDirections.Default
+import kotlinx.coroutines.flow.MutableStateFlow
 
-class Navigator<T : Parcelable> private constructor(
-    initialBackStack: List<T>,
-    backDispatcher: OnBackPressedDispatcher
-) {
-    constructor(
-        initial: T,
-        backDispatcher: OnBackPressedDispatcher
-    ) : this(listOf(initial), backDispatcher)
 
-    private val backStack = initialBackStack.toMutableStateList()
+interface NavigationCommand {
 
-    private val backCallback = object : OnBackPressedCallback(canGoBack()) {
-        override fun handleOnBackPressed() {
-            back()
-        }
-    }.also { callback ->
-        backDispatcher.addCallback(callback)
+    val arguments: List<NamedNavArgument>
+
+    val destination: String
+}
+
+object NavigationDirections {
+
+    val spaceX  = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = "spaceX"
     }
 
-    val current: T get() = backStack.last()
+    val spaceXDetail = object : NavigationCommand {
 
-    fun back() {
-        backStack.removeAt(backStack.lastIndex)
-        backCallback.isEnabled = canGoBack()
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = "spaceXDetail"
     }
 
-    fun navigate(destination: T) {
-        backStack += destination
-        backCallback.isEnabled = canGoBack()
+    val Default = object : NavigationCommand {
+
+        override val arguments = emptyList<NamedNavArgument>()
+
+        override val destination = ""
+    }
+}
+
+class NavigationManager {
+
+    var commands = MutableStateFlow(Default)
+
+    fun navigate(
+        directions: NavigationCommand
+    ) {
+        commands.value = directions
     }
 
-    private fun canGoBack(): Boolean = backStack.size > 1
 }

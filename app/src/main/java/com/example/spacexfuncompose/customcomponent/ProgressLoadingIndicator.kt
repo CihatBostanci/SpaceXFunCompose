@@ -35,21 +35,8 @@ fun ProgressLoadingIndicator(isDisplayed: Boolean?) {
             ) {
                 // below line is use to display
                 // a circular progress bar.
-                CircularProgressIndicator(
-                    // below line is use to add padding
-                    // to our progress bar.
-                    modifier = Modifier.padding(16.dp),
-
-                    // below line is use to add color
-                    // to our progress bar.
-                    color = MaterialTheme.colors.primary,
-
-                    // below line is use to add stroke
-                    // width to our progress bar.
-                    strokeWidth = Dp(value = 4F)
-                )
+                CircularProgressIndicator()
             }
-
         }
     }
 }

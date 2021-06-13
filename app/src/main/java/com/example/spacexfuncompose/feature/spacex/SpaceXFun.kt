@@ -28,10 +28,10 @@ fun SpaceXFun( viewModel: SpaceXViewModel) {
 
     Row(modifier = Modifier.fillMaxSize()) {
         Log.d("SpaceXFUN", "on run")
-        LazyRow {
+        LazyRow{
             items(itemList) { item ->
 
-                SpaceXFunItem(item)
+                SpaceXFunItem(viewModel, item)
             }
         }
          //ProgressLoadingIndicator(isDisplayed = loading)

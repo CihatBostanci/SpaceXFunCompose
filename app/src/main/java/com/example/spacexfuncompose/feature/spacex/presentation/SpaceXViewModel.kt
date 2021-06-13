@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
 import com.example.spacexfuncompose.model.AllRocketResponse
+import com.example.spacexfuncompose.navigation.NavigationDirections
+import com.example.spacexfuncompose.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @InternalCoroutinesApi
 @HiltViewModel
 class SpaceXViewModel @Inject constructor(
-    private val spaceXUseCase: SpaceXUseCase
+    private val spaceXUseCase: SpaceXUseCase,
+    private val navigationManager: NavigationManager
 ) : ViewModel() {
     companion object {
         private const val TAG = "SpaceXViewModel"
@@ -35,6 +38,7 @@ class SpaceXViewModel @Inject constructor(
         getSpaceXRockets()
     }
 
+    //Api Call
     private fun getSpaceXRockets() = viewModelScope.launch {
         spaceXUseCase.invoke()
             .onStart {
@@ -53,6 +57,11 @@ class SpaceXViewModel @Inject constructor(
                 Log.d(TAG, "On Collect")
                 _rocketList.postValue(it)
             }
+    }
+
+    fun goToDetail() {
+        Log.d(TAG, "Go To Detail")
+        navigationManager.navigate(NavigationDirections.spaceXDetail)
     }
 
 }

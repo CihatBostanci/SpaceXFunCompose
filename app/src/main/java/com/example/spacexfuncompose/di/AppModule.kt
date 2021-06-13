@@ -2,6 +2,7 @@ package com.example.spacexfuncompose.di
 
 import com.example.spacexfuncompose.BuildConfig
 import com.example.spacexfuncompose.feature.spacex.SpaceXService
+import com.example.spacexfuncompose.navigation.NavigationManager
 import com.example.spacexfuncompose.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -52,6 +53,10 @@ class ApplicationModule {
     fun provideApiService(retrofit: Retrofit): SpaceXService =
         retrofit.create(SpaceXService::class.java)
 
+    //Provides navigation module
+    @Singleton
+    @Provides
+    fun providesNavigationManager() = NavigationManager()
 
 
 }

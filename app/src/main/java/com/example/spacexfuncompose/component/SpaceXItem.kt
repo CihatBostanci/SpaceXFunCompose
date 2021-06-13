@@ -1,5 +1,7 @@
 package com.example.spacexfuncompose.component
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -8,14 +10,18 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.spacexfuncompose.customcomponent.*
+import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.ui.theme.Dimens
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.lightGray
+import kotlinx.coroutines.InternalCoroutinesApi
 
 
+@InternalCoroutinesApi
 @Composable
 fun SpaceXFunItem(
+    spaceXViewModel: SpaceXViewModel,
     spaceXViewItem: AllRocketResponse
 ) {
     Column(
@@ -30,6 +36,9 @@ fun SpaceXFunItem(
                 .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
                 .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
                 .align(CenterHorizontally)
+                .clickable(onClick = {
+                    Log.d("Cihat", "clicked")
+                    spaceXViewModel.goToDetail() })
             //.padding(Dimens.dimen_2)
         )
 
