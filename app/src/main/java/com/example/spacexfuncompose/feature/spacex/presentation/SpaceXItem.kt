@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.spacexfuncompose.customcomponent.*
-import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.ui.theme.Dimens
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
@@ -29,7 +28,7 @@ fun SpaceXFunItem(
         verticalArrangement = Arrangement.Center
     ) {
         RoundedImageComponent(
-            spaceXViewItem.flickr_images[0],
+            spaceXViewItem.flickr_images?.get(0),
             modifier = Modifier
                 //.clip(shape = RoundedCornerShape(Dimens.dimen_2))
                 .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
@@ -37,7 +36,8 @@ fun SpaceXFunItem(
                 .align(CenterHorizontally)
                 .clickable(onClick = {
                     Log.d("Cihat", "clicked")
-                    spaceXViewModel.goToDetail() })
+                    spaceXViewModel.goToDetail(spaceXViewItem)
+                })
             //.padding(Dimens.dimen_2)
         )
 

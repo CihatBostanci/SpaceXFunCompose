@@ -69,7 +69,9 @@ class MainActivity : ComponentActivity() {
         }
         //observation of destination
         navigationManager.commands.collectAsState().value.also { command ->
-            if (command.destination.isNotEmpty()) navController.navigate(command.destination)
+            if (command.destination.isNotEmpty()) {
+                navController.navigate(command.destination)
+            }
         }
     }
 

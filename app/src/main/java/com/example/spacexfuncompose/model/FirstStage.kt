@@ -1,7 +1,10 @@
 package com.example.spacexfuncompose.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class FirstStage(
     @SerializedName("burn_time_sec")
     val burn_time_sec: Int,
@@ -15,4 +18,4 @@ data class FirstStage(
     val thrust_sea_level: ThrustSeaLevelX,
     @SerializedName("thrust_vacuum")
     val thrust_vacuum: ThrustVacuumX
-)
+): Parcelable

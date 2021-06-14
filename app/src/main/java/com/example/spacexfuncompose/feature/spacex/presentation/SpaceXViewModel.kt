@@ -59,9 +59,13 @@ class SpaceXViewModel @Inject constructor(
             }
     }
 
-    fun goToDetail() {
+    fun goToDetail(spaceXViewItem: AllRocketResponse) {
         Log.d(TAG, "Go To Detail")
-        navigationManager.navigate(NavigationDirections.SpaceXDetail)
+        navigationManager.navigate(NavigationDirections.SpaceXDetail.also {
+            it.arguments.apply {
+                putParcelable("rocket", spaceXViewItem)
+            }
+        })
     }
 
 }
