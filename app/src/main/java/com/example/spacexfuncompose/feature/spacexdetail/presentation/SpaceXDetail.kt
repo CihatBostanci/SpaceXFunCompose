@@ -1,4 +1,4 @@
-package com.example.spacexfuncompose.feature.spacexdetail
+package com.example.spacexfuncompose.feature.spacexdetail.presentation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -28,14 +28,14 @@ fun SpaceXDetail(viewModel: SpaceXDetailViewModel, rocket: AllRocketResponse?) {
 
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
 
         Row(
             modifier = Modifier
                 .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
-                .align(Alignment.CenterHorizontally)
+                .align(CenterHorizontally)
         ) {
             LazyRow {
                 rocket?.flickr_images?.let {
@@ -57,7 +57,7 @@ fun SpaceXDetail(viewModel: SpaceXDetailViewModel, rocket: AllRocketResponse?) {
             shape = RoundedCornerShape(Dimens.dimen_2),
             modifier = Modifier
                 .height((1.5 * ScreenSizeManager.screenHeightDp / 5).dp)
-                .align(Alignment.CenterHorizontally)
+                .align(CenterHorizontally)
                 .padding(Dimens.dimen_1)
         ) {
             Column {

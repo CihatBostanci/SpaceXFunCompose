@@ -1,17 +1,15 @@
-package com.example.spacexfuncompose.feature.spacexdetail
+package com.example.spacexfuncompose.feature.spacexdetail.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
-import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @InternalCoroutinesApi
 @HiltViewModel

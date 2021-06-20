@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXFun
-import com.example.spacexfuncompose.feature.spacexdetail.SpaceXDetail
+import com.example.spacexfuncompose.feature.spacexdetail.presentation.SpaceXDetail
 import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
