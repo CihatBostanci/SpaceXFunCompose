@@ -14,8 +14,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXFun
 import com.example.spacexfuncompose.feature.spacexdetail.SpaceXDetail
+import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
+import com.example.spacexfuncompose.navigation.SPACE_X_DETAIL_DESTINATION
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager.displayMetrics
 import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme
@@ -64,17 +66,32 @@ class MainActivity : ComponentActivity() {
                 SpaceXFun(hiltViewModel())
             }
             composable(NavigationDirections.SpaceXDetail.destination) {
-                SpaceXDetail(hiltViewModel())
+                val rocket =
+                    navController.previousBackStackEntry?.arguments?.getParcelable<AllRocketResponse>(
+                        "rocket"
+                    )
+                SpaceXDetail(hiltViewModel(), rocket)
             }
         }
         //observation of destination
         navigationManager.commands.collectAsState().value.also { command ->
             if (command.destination.isNotEmpty()) {
-                navController.navigate(command.destination)
+                when (command.destination) {
+                    SPACE_X_DETAIL_DESTINATION -> {
+                        navController.currentBackStackEntry?.arguments = command.arguments
+                        navController.navigate(command.destination)
+                    }
+                    else -> navController.navigate(command.destination)
+                }
             }
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        //Change Default Navigate
+        navigationManager.commands.value = NavigationDirections.Default
+    }
 
     private fun screenSizeArranger() {
         ScreenSizeManager.display = windowManager.defaultDisplay

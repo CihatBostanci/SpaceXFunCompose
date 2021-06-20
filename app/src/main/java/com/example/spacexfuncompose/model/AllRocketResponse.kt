@@ -38,7 +38,7 @@ data class AllRocketResponse(
     @SerializedName("payload_weights")
     val payload_weights: List<PayloadWeight>? = null,
     @SerializedName("flickr_images")
-    val flickr_images: MutableList<String>? = null,
+    val flickr_images: MutableList<String> = mutableListOf(),
     @SerializedName("rocket_id")
     val rocket_id: String = "",
     @SerializedName("name")

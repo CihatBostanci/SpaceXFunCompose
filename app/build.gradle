@@ -23,6 +23,16 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
+        
     }
 
     buildTypes {
@@ -60,8 +70,7 @@ dependencies {
     implementation "androidx.activity:activity-compose:$compose_version"
 
     //Coil
-    implementation 'com.google.accompanist:accompanist-coil:0.11.1'
-    implementation 'io.coil-kt:coil-gif:1.2.2'
+    implementation "com.google.accompanist:accompanist-coil:$coilVersion"
 
     //Material
     implementation "com.google.android.material:material:$materialVersion"
@@ -86,13 +95,21 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
 
     //For Preview
-    implementation "androidx.compose.ui:ui-tooling:1.0.0-beta07"
+    implementation "androidx.compose.ui:ui-tooling:$composeTooling"
 
     // Compose Navigation with hilt
-    implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha02"
+    implementation "androidx.hilt:hilt-navigation-compose:$navigationCompose"
     implementation "androidx.navigation:navigation-compose:$compose_version"
 
 
+    //Data Store
+    // Preferences DataStore
+    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
+
+    //Room Database
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
 
 }
 kapt {

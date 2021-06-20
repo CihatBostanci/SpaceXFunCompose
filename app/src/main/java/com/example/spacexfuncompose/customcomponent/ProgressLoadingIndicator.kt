@@ -1,21 +1,14 @@
 package com.example.spacexfuncompose.customcomponent
 
-import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContentProviderCompat.requireContext
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import com.example.spacexfuncompose.R
 
 private const val LOADING_TAG = "Loading Indicator"
 
@@ -40,14 +33,14 @@ fun ProgressLoadingIndicator(isDisplayed: Boolean?) {
             ) {
                 val context = LocalContext.current
 
-                val imageLoader = ImageLoader.Builder(context)
+                /*val imageLoader = ImageLoader.Builder(context)
                     .componentRegistry {
                         if (SDK_INT >= 28) {
                             add(ImageDecoderDecoder(context))
                         } else {
                             add(GifDecoder())
                         }
-                    }.build()
+                    }.build()*/
             }
         }
     }

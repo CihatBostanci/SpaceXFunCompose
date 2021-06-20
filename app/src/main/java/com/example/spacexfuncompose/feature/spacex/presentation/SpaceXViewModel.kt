@@ -10,6 +10,7 @@ import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -39,7 +40,7 @@ class SpaceXViewModel @Inject constructor(
     }
 
     //Api Call
-    private fun getSpaceXRockets() = viewModelScope.launch {
+    private fun getSpaceXRockets() = viewModelScope.launch(Dispatchers.IO) {
         spaceXUseCase.invoke()
             .onStart {
                 Log.d(TAG, "On start")
@@ -66,6 +67,14 @@ class SpaceXViewModel @Inject constructor(
                 putParcelable("rocket", spaceXViewItem)
             }
         })
+    }
+
+    fun addRocketToFavorite(rocketId: String) =  viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.addRocketToFavorite(rocketId)
+    }
+
+    fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.deleteRocketToFavorite(rocketId)
     }
 
 }

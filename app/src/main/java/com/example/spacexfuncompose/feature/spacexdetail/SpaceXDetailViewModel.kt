@@ -8,7 +8,9 @@ import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
 import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @InternalCoroutinesApi
@@ -18,13 +20,12 @@ class SpaceXDetailViewModel @Inject constructor(
     private val navigationManager: NavigationManager
 ) : ViewModel() {
 
-    private var _rocket: MutableLiveData<AllRocketResponse> = MutableLiveData()
-    val rocket: LiveData<AllRocketResponse> get() = _rocket
+    fun addRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.addRocketToFavorite(rocketId)
+    }
 
-    fun loadRocket(){
-        if(navigationManager.bundle.getParcelable<AllRocketResponse>("selected_person") != null) {
-            _rocket.postValue(navigationManager.bundle.getParcelable("selected_person")!!)
-        }
+    fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.deleteRocketToFavorite(rocketId)
     }
 
 }

@@ -1,8 +1,8 @@
-package com.example.spacexfuncompose.feature.spacex.presentation
+package com.example.spacexfuncompose.feature.spacexdetail
 
-import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
@@ -22,61 +22,67 @@ import kotlinx.coroutines.InternalCoroutinesApi
 
 @InternalCoroutinesApi
 @Composable
-fun SpaceXFunItem(
-    spaceXViewModel: SpaceXViewModel,
-    spaceXViewItem: AllRocketResponse
-) {
+fun SpaceXDetail(viewModel: SpaceXDetailViewModel, rocket: AllRocketResponse?) {
 
     val (isChecked, setChecked) = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),
-        horizontalAlignment = CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        RoundedImageComponent(
-            spaceXViewItem.flickr_images[0],
+
+        Row(
             modifier = Modifier
-                //.clip(shape = RoundedCornerShape(Dimens.dimen_2))
                 .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
-                .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
-                .align(CenterHorizontally)
-                .clickable(onClick = {
-                    Log.d("Cihat", "clicked")
-                    spaceXViewModel.goToDetail(spaceXViewItem)
-                })
-            //.padding(Dimens.dimen_2)
-        )
+                .align(Alignment.CenterHorizontally)
+        ) {
+            LazyRow {
+                rocket?.flickr_images?.let {
+                    items(it.toList()) { item ->
+                        RoundedImageComponent(
+                            item,
+                            modifier = Modifier
+                                .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
+                                .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
+                                .padding(Dimens.dimen_1)
+                        )
+                    }
+                }
+            }
+        }
 
         Card(
             backgroundColor = if (isChecked) darkGray else lightGray,
             shape = RoundedCornerShape(Dimens.dimen_2),
             modifier = Modifier
-                //.padding(start = Dimens.dimen_2, end = Dimens.dimen_2, bottom = Dimens.dimen_2)
                 .height((1.5 * ScreenSizeManager.screenHeightDp / 5).dp)
-                .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
-                .align(CenterHorizontally)
+                .align(Alignment.CenterHorizontally)
+                .padding(Dimens.dimen_1)
         ) {
             Column {
                 SpacerSmall()
                 HeaderText(
-                    text = spaceXViewItem.name,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    text = rocket?.name,
+                    modifier = Modifier.align(CenterHorizontally)
                 )
                 SpacerMedium()
-                SimpleText(text = spaceXViewItem.description)
+                SimpleText(text = rocket?.description, modifier = Modifier.padding(Dimens.dimen_1))
                 SpacerBig()
                 FavoriteButton(
                     modifier = Modifier.align(Alignment.End),
                     isChecked = isChecked,
                     onClick = {
                         setChecked(!isChecked)
-                        when(isChecked) {
-                            false -> spaceXViewModel.addRocketToFavorite(spaceXViewItem.id)
-                            true -> spaceXViewModel.deleteRocketToFavorite(spaceXViewItem.id)
+                        rocket?.let {
+                            when (isChecked) {
+                                false -> viewModel.addRocketToFavorite(it.id)
+                                true -> viewModel.deleteRocketToFavorite(it.id)
+                            }
                         }
                     })
             }
         }
     }
+
 }

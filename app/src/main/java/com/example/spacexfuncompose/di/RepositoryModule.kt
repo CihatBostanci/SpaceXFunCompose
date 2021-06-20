@@ -1,6 +1,7 @@
 package com.example.spacexfuncompose.di
 
 import com.example.spacexfuncompose.feature.spacex.SpaceXService
+import com.example.spacexfuncompose.feature.spacex.data.FavoriteRocketDAO
 import com.example.spacexfuncompose.feature.spacex.data.SpaceXRepository
 import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
 import dagger.Module
@@ -15,7 +16,10 @@ object RepositoryModule {
 
     @Provides
     @ActivityRetainedScoped
-    fun provideSpaceXRepository(service: SpaceXService) = SpaceXRepository(service)
+    fun provideSpaceXRepository(
+        service: SpaceXService,
+        favoriteRocketDAO: FavoriteRocketDAO
+    ) = SpaceXRepository(service, favoriteRocketDAO)
 
     @Provides
     @ActivityRetainedScoped
