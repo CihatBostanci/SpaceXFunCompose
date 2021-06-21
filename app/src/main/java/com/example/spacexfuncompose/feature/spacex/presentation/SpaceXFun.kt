@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import com.example.spacexfuncompose.model.AllRocketResponse
+import com.example.spacexfuncompose.model.FavoriteIdEntity
 import kotlinx.coroutines.InternalCoroutinesApi
 
 
@@ -18,11 +19,14 @@ fun SpaceXFun(viewModel: SpaceXViewModel) {
 
     val itemList: List<AllRocketResponse> by viewModel.rocketList.observeAsState(listOf())
     val loading = viewModel.isRocketProgress.value
+    val favoriteList: List<FavoriteIdEntity> by viewModel.favoriteRocketListLiveData.observeAsState(listOf())
 
     Row(modifier = Modifier.fillMaxSize()) {
         LazyRow {
             items(itemList) { item ->
-                SpaceXFunItem(viewModel, item)
+                SpaceXFunItem(viewModel, item,
+                    favoriteList.any { it.favoriteRocketId == item.id }
+                )
             }
         }
         //ProgressLoadingIndicator(isDisplayed = loading)

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
 import com.example.spacexfuncompose.model.AllRocketResponse
+import com.example.spacexfuncompose.model.FavoriteIdEntity
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,11 +33,15 @@ class SpaceXViewModel @Inject constructor(
     private var _rocketList: MutableLiveData<MutableList<AllRocketResponse>> = MutableLiveData()
     val rocketList: LiveData<MutableList<AllRocketResponse>> get() = _rocketList
 
+    private var _favoriteRocketList: MutableLiveData<MutableList<FavoriteIdEntity>> = MutableLiveData()
+    val favoriteRocketListLiveData: LiveData<MutableList<FavoriteIdEntity>> get() = _favoriteRocketList
+
     private val _isRocketProgress: MutableLiveData<Boolean> = MutableLiveData(true)
     val isRocketProgress: LiveData<Boolean> get() = _isRocketProgress
 
     init {
         getSpaceXRockets()
+        getFavoriteRocketList()
     }
 
     //Api Call
@@ -76,5 +81,23 @@ class SpaceXViewModel @Inject constructor(
     fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
         spaceXUseCase.deleteRocketToFavorite(rocketId)
     }
+
+    private fun getFavoriteRocketList() = viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.getFavoriteRockets()
+            .onStart {
+                Log.d(TAG, "On start favorite")
+            }
+            .onCompletion {
+                Log.d(TAG, "On Completion favorite")
+            }
+            .catch {
+                Log.d(TAG, "On Error favorite")
+            }
+            .collect {
+                Log.d(TAG, "On Collect favorite")
+                _favoriteRocketList.postValue(it)
+            }
+    }
+
 
 }

@@ -1,11 +1,14 @@
 package com.example.spacexfuncompose.feature.spacexdetail.presentation
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -14,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.spacexfuncompose.customcomponent.*
 import com.example.spacexfuncompose.model.AllRocketResponse
+import com.example.spacexfuncompose.model.FavoriteIdEntity
 import com.example.spacexfuncompose.ui.theme.Dimens
 import com.example.spacexfuncompose.ui.theme.ScreenSizeManager
 import com.example.spacexfuncompose.ui.theme.darkGray
@@ -22,9 +26,13 @@ import kotlinx.coroutines.InternalCoroutinesApi
 
 @InternalCoroutinesApi
 @Composable
-fun SpaceXDetail(viewModel: SpaceXDetailViewModel, rocket: AllRocketResponse?) {
-
-    val (isChecked, setChecked) = remember { mutableStateOf(false) }
+fun SpaceXDetail(
+    viewModel: SpaceXDetailViewModel, rocket: AllRocketResponse?, isFavorite: Boolean
+) {
+    Log.d("Cihat Logged:", isFavorite.toString())
+    val (isChecked, setChecked) = remember {
+        mutableStateOf(!isFavorite)
+    }
 
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),

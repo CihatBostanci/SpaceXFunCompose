@@ -23,11 +23,13 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @InternalCoroutinesApi
 @Composable
 fun SpaceXFunItem(
-    spaceXViewModel: SpaceXViewModel,
-    spaceXViewItem: AllRocketResponse
+    viewModel: SpaceXViewModel,
+    spaceXViewItem: AllRocketResponse,
+    isFavorite: Boolean
 ) {
 
-    val (isChecked, setChecked) = remember { mutableStateOf(false) }
+
+    val (isChecked, setChecked) = remember { mutableStateOf(isFavorite) }
 
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),
@@ -43,7 +45,7 @@ fun SpaceXFunItem(
                 .align(CenterHorizontally)
                 .clickable(onClick = {
                     Log.d("Cihat", "clicked")
-                    spaceXViewModel.goToDetail(spaceXViewItem)
+                    viewModel.goToDetail(spaceXViewItem)
                 })
             //.padding(Dimens.dimen_2)
         )
@@ -61,7 +63,7 @@ fun SpaceXFunItem(
                 SpacerSmall()
                 HeaderText(
                     text = spaceXViewItem.name,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(CenterHorizontally)
                 )
                 SpacerMedium()
                 SimpleText(text = spaceXViewItem.description)
@@ -72,8 +74,8 @@ fun SpaceXFunItem(
                     onClick = {
                         setChecked(!isChecked)
                         when(isChecked) {
-                            false -> spaceXViewModel.addRocketToFavorite(spaceXViewItem.id)
-                            true -> spaceXViewModel.deleteRocketToFavorite(spaceXViewItem.id)
+                            false -> viewModel.addRocketToFavorite(spaceXViewItem.id)
+                            true -> viewModel.deleteRocketToFavorite(spaceXViewItem.id)
                         }
                     })
             }
