@@ -8,17 +8,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.spacexfuncompose.feature.detailspacex.SpaceXDetail
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXFun
-import com.example.spacexfuncompose.feature.spacexdetail.presentation.SpaceXDetail
-import com.example.spacexfuncompose.feature.spacexdetail.presentation.SpaceXDetailViewModel
 import com.example.spacexfuncompose.model.AllRocketResponse
-import com.example.spacexfuncompose.model.FavoriteIdEntity
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
 import com.example.spacexfuncompose.navigation.SPACE_X_DETAIL_DESTINATION
@@ -74,11 +70,8 @@ class MainActivity : ComponentActivity() {
                     navController.previousBackStackEntry?.arguments?.getParcelable<AllRocketResponse>(
                         "rocket"
                     )
-                val spaceXDetailViewModel  = hiltViewModel() as SpaceXDetailViewModel
-                val favoriteList: List<FavoriteIdEntity> by spaceXDetailViewModel.favoriteRocketListLiveData.observeAsState(
-                    listOf()
-                )
-                SpaceXDetail(hiltViewModel(), rocket, favoriteList.any { it.favoriteRocketId == rocket?.id })
+
+                SpaceXDetail(hiltViewModel(), rocket)
             }
         }
         //observation of destination

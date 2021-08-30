@@ -23,9 +23,10 @@ import javax.inject.Inject
 @InternalCoroutinesApi
 @HiltViewModel
 class SpaceXViewModel @Inject constructor(
-    private val spaceXUseCase: SpaceXUseCase,
-    private val navigationManager: NavigationManager
+    private val navigationManager: NavigationManager,
+    private val spaceXUseCase: SpaceXUseCase
 ) : ViewModel() {
+
     companion object {
         private const val TAG = "SpaceXViewModel"
     }
@@ -33,15 +34,33 @@ class SpaceXViewModel @Inject constructor(
     private var _rocketList: MutableLiveData<MutableList<AllRocketResponse>> = MutableLiveData()
     val rocketList: LiveData<MutableList<AllRocketResponse>> get() = _rocketList
 
-    private var _favoriteRocketList: MutableLiveData<MutableList<FavoriteIdEntity>> = MutableLiveData()
-    val favoriteRocketListLiveData: LiveData<MutableList<FavoriteIdEntity>> get() = _favoriteRocketList
-
     private val _isRocketProgress: MutableLiveData<Boolean> = MutableLiveData(true)
     val isRocketProgress: LiveData<Boolean> get() = _isRocketProgress
+
+    private var _favoriteRocketList: MutableLiveData<MutableList<FavoriteIdEntity>> =
+        MutableLiveData()
+    val favoriteRocketListLiveData: LiveData<MutableList<FavoriteIdEntity>> get() = _favoriteRocketList
 
     init {
         getSpaceXRockets()
         getFavoriteRocketList()
+    }
+
+    fun getFavoriteRocketList() = viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.getFavoriteRockets()
+            .onStart {
+                Log.d(TAG, "On start favorite")
+            }
+            .onCompletion {
+                Log.d(TAG, "On Completion favorite")
+            }
+            .catch {
+                Log.d(TAG, "On Error favorite")
+            }
+            .collect {
+                Log.d(TAG, "On Collect favorite")
+                _favoriteRocketList.postValue(it)
+            }
     }
 
     //Api Call
@@ -74,30 +93,12 @@ class SpaceXViewModel @Inject constructor(
         })
     }
 
-    fun addRocketToFavorite(rocketId: String) =  viewModelScope.launch(Dispatchers.IO) {
+    fun addRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
         spaceXUseCase.addRocketToFavorite(rocketId)
     }
 
     fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
         spaceXUseCase.deleteRocketToFavorite(rocketId)
     }
-
-    private fun getFavoriteRocketList() = viewModelScope.launch(Dispatchers.IO) {
-        spaceXUseCase.getFavoriteRockets()
-            .onStart {
-                Log.d(TAG, "On start favorite")
-            }
-            .onCompletion {
-                Log.d(TAG, "On Completion favorite")
-            }
-            .catch {
-                Log.d(TAG, "On Error favorite")
-            }
-            .collect {
-                Log.d(TAG, "On Collect favorite")
-                _favoriteRocketList.postValue(it)
-            }
-    }
-
 
 }

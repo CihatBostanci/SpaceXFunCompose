@@ -1,4 +1,4 @@
-package com.example.spacexfuncompose.feature.spacexdetail.presentation
+package com.example.spacexfuncompose.feature.detailspacex
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,9 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
-import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.model.FavoriteIdEntity
-import com.example.spacexfuncompose.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -23,30 +21,26 @@ import javax.inject.Inject
 @InternalCoroutinesApi
 @HiltViewModel
 class SpaceXDetailViewModel @Inject constructor(
-    private val spaceXUseCase: SpaceXUseCase,
-    private val navigationManager: NavigationManager
+    private val spaceXUseCase: SpaceXUseCase
 ) : ViewModel() {
 
     companion object {
         private const val TAG = "SpaceXDetailViewModel"
     }
 
-    private var _favoriteRocketList: MutableLiveData<MutableList<FavoriteIdEntity>> = MutableLiveData()
+    private var _favoriteRocketList: MutableLiveData<MutableList<FavoriteIdEntity>> =
+        MutableLiveData()
     val favoriteRocketListLiveData: LiveData<MutableList<FavoriteIdEntity>> get() = _favoriteRocketList
+
+    private var _isFavorite: MutableLiveData<Boolean> =
+        MutableLiveData()
+    val isFavoriteLiveData: LiveData<Boolean> get() = _isFavorite
 
     init {
         getFavoriteRocketList()
     }
 
-    fun addRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
-        spaceXUseCase.addRocketToFavorite(rocketId)
-    }
-
-    fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
-        spaceXUseCase.deleteRocketToFavorite(rocketId)
-    }
-
-    private fun getFavoriteRocketList() = viewModelScope.launch(Dispatchers.IO) {
+    fun getFavoriteRocketList() = viewModelScope.launch(Dispatchers.IO) {
         spaceXUseCase.getFavoriteRockets()
             .onStart {
                 Log.d(TAG, "On start favorite")
@@ -59,8 +53,21 @@ class SpaceXDetailViewModel @Inject constructor(
             }
             .collect {
                 Log.d(TAG, "On Collect favorite")
+                if(it.size>=1){
+                    _isFavorite.postValue(true)
+                } else {
+                    false
+                }
                 _favoriteRocketList.postValue(it)
             }
+    }
+
+    fun addRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.addRocketToFavorite(rocketId)
+    }
+
+    fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
+        spaceXUseCase.deleteRocketToFavorite(rocketId)
     }
 
 }
