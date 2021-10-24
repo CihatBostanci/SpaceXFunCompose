@@ -23,7 +23,8 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @InternalCoroutinesApi
 @Composable
 fun SpaceXDetail(
-    viewModel: SpaceXDetailViewModel, rocket: AllRocketResponse?
+    viewModel: SpaceXDetailViewModel,
+    rocket: AllRocketResponse?
 ) {
 
     Log.d("Cİhat Logged", viewModel.isFavoriteLiveData.value.toString())
@@ -59,7 +60,7 @@ fun SpaceXDetail(
         }
 
         Card(
-            backgroundColor = isChecked?.let { if (isChecked.value) darkGray else lightGray }
+            backgroundColor = isChecked.let { if (isChecked.value) darkGray else lightGray }
                 ?: kotlin.run {
                     lightGray
                 },
@@ -80,9 +81,9 @@ fun SpaceXDetail(
                 SpacerBig()
                 FavoriteButton(
                     modifier = Modifier.align(Alignment.End),
-                    isChecked = isChecked?.let{ it.value} ?: run { false },
+                    isChecked = isChecked?.value ?: run { false },
                     onClick = {
-                        setChecked( isChecked.apply { !value })
+                        setChecked(isChecked.apply { !value })
                         rocket?.let {
                             when (isChecked.value) {
                                 false -> viewModel.addRocketToFavorite(it.id)
@@ -94,5 +95,4 @@ fun SpaceXDetail(
             }
         }
     }
-
 }

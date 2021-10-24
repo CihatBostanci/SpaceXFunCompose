@@ -63,7 +63,7 @@ class SpaceXViewModel @Inject constructor(
             }
     }
 
-    //Api Call
+    // Api Call
     private fun getSpaceXRockets() = viewModelScope.launch(Dispatchers.IO) {
         spaceXUseCase.invoke()
             .onStart {
@@ -86,11 +86,13 @@ class SpaceXViewModel @Inject constructor(
 
     fun goToDetail(spaceXViewItem: AllRocketResponse) {
         Log.d(TAG, "Go To Detail")
-        navigationManager.navigate(NavigationDirections.SpaceXDetail.also {
-            it.arguments.apply {
-                putParcelable("rocket", spaceXViewItem)
+        navigationManager.navigate(
+            NavigationDirections.SpaceXDetail.also {
+                it.arguments.apply {
+                    putParcelable("rocket", spaceXViewItem)
+                }
             }
-        })
+        )
     }
 
     fun addRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
@@ -100,5 +102,4 @@ class SpaceXViewModel @Inject constructor(
     fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
         spaceXUseCase.deleteRocketToFavorite(rocketId)
     }
-
 }

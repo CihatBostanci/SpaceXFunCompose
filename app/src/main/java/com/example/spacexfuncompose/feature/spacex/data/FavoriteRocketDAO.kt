@@ -1,7 +1,6 @@
 package com.example.spacexfuncompose.feature.spacex.data
 
 import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
 import com.example.spacexfuncompose.model.FavoriteIdEntity
 

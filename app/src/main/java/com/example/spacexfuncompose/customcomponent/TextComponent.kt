@@ -14,7 +14,6 @@ fun SimpleText(modifier: Modifier = Modifier, text: String? = null) = Text(
     modifier = modifier
 )
 
-
 @Composable
 fun HeaderText(modifier: Modifier = Modifier, text: String? = null) = Text(
     text = if (text.isNullOrEmpty()) "Simple Text" else text,

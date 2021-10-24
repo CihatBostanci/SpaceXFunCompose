@@ -28,7 +28,6 @@ fun SpaceXFunItem(
     isFavorite: Boolean
 ) {
 
-
     val (isChecked, setChecked) = remember { mutableStateOf(isFavorite) }
 
     Column(
@@ -39,7 +38,7 @@ fun SpaceXFunItem(
         RoundedImageComponent(
             spaceXViewItem.flickr_images[0],
             modifier = Modifier
-                //.clip(shape = RoundedCornerShape(Dimens.dimen_2))
+                // .clip(shape = RoundedCornerShape(Dimens.dimen_2))
                 .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
                 .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
                 .align(CenterHorizontally)
@@ -47,14 +46,14 @@ fun SpaceXFunItem(
                     Log.d("Cihat", "clicked")
                     viewModel.goToDetail(spaceXViewItem)
                 })
-            //.padding(Dimens.dimen_2)
+            // .padding(Dimens.dimen_2)
         )
 
         Card(
             backgroundColor = if (isChecked) darkGray else lightGray,
             shape = RoundedCornerShape(Dimens.dimen_2),
             modifier = Modifier
-                //.padding(start = Dimens.dimen_2, end = Dimens.dimen_2, bottom = Dimens.dimen_2)
+                // .padding(start = Dimens.dimen_2, end = Dimens.dimen_2, bottom = Dimens.dimen_2)
                 .height((1.5 * ScreenSizeManager.screenHeightDp / 5).dp)
                 .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
                 .align(CenterHorizontally)
@@ -73,11 +72,12 @@ fun SpaceXFunItem(
                     isChecked = isChecked,
                     onClick = {
                         setChecked(!isChecked)
-                        when(isChecked) {
+                        when (isChecked) {
                             false -> viewModel.addRocketToFavorite(spaceXViewItem.id)
                             true -> viewModel.deleteRocketToFavorite(spaceXViewItem.id)
                         }
-                    })
+                    }
+                )
             }
         }
     }

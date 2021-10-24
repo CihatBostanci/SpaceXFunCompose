@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @InternalCoroutinesApi
 @HiltViewModel
 class SpaceXDetailViewModel @Inject constructor(
@@ -53,7 +52,7 @@ class SpaceXDetailViewModel @Inject constructor(
             }
             .collect {
                 Log.d(TAG, "On Collect favorite")
-                if(it.size>=1){
+                if (it.size >= 1) {
                     _isFavorite.postValue(true)
                 } else {
                     false
@@ -63,11 +62,12 @@ class SpaceXDetailViewModel @Inject constructor(
     }
 
     fun addRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d("Cihat Log:", " favorite create:$rocketId")
         spaceXUseCase.addRocketToFavorite(rocketId)
     }
 
     fun deleteRocketToFavorite(rocketId: String) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d("Cihat Log:", " favorite deleted:$rocketId")
         spaceXUseCase.deleteRocketToFavorite(rocketId)
     }
-
 }

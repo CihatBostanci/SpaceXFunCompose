@@ -9,16 +9,9 @@ class SpaceXRepository @Inject constructor(
     private val apiService: SpaceXService,
     private val favoriteRocketDAO: FavoriteRocketDAO
 ) {
-    companion object {
-        const val DELAY_FOR_FAVORITE = 1000L
-    }
     suspend fun getSpaceXRockets() = flow {
-
-        // Send a random fake weather forecast data
         emit(
-            //IntentUtil.gson.fromJson(
-            apiService.getAllRockets()//.charStream(), AllRocketListResponse::class.java
-            //)
+            apiService.getAllRockets()
         )
     }
 
@@ -30,13 +23,9 @@ class SpaceXRepository @Inject constructor(
         favoriteRocketDAO.deleteRocket(rocketId)
     }
 
-   suspend fun getFavoriteRockets() = flow {
-       delay(DELAY_FOR_FAVORITE)
-        // Send a random fake weather forecast data
+    suspend fun getFavoriteRockets() = flow {
         emit(
             favoriteRocketDAO.getAllRockets()
         )
     }
-
 }
-

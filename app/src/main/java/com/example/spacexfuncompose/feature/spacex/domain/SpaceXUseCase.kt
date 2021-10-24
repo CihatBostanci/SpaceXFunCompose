@@ -11,5 +11,4 @@ class SpaceXUseCase(private val repository: SpaceXRepository) {
     suspend fun getFavoriteRockets() = repository.getFavoriteRockets()
 
     fun deleteRocketToFavorite(rocketId: String) = repository.deleteRocketFavoriteList(rocketId)
-
 }
