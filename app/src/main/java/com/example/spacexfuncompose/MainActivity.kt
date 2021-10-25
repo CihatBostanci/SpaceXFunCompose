@@ -3,8 +3,10 @@ package com.example.spacexfuncompose
 import android.annotation.SuppressLint
 import android.graphics.Point
 import android.os.Bundle
+import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDialog
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,6 +14,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.spacexfuncompose.base.BaseViewModel
+import com.example.spacexfuncompose.customcomponent.ProgressLoadingIndicator
 import com.example.spacexfuncompose.feature.detailspacex.SpaceXDetail
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXFun
 import com.example.spacexfuncompose.model.AllRocketResponse
@@ -24,6 +28,7 @@ import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
+import javax.inject.Named
 
 @InternalCoroutinesApi
 @AndroidEntryPoint
@@ -32,10 +37,8 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var navigationManager: NavigationManager
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         screenSizeArranger()
         setContent {
             SpaceXFunComposeTheme {

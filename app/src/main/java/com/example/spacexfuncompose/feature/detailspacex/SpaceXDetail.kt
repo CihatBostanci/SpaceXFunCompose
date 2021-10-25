@@ -60,10 +60,7 @@ fun SpaceXDetail(
         }
 
         Card(
-            backgroundColor = isChecked.let { if (isChecked.value) darkGray else lightGray }
-                ?: kotlin.run {
-                    lightGray
-                },
+            backgroundColor = if (isChecked.value) darkGray else lightGray,
             shape = RoundedCornerShape(Dimens.dimen_2),
             modifier = Modifier
                 .height((1.5 * ScreenSizeManager.screenHeightDp / 5).dp)

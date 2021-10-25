@@ -8,11 +8,11 @@ import com.example.spacexfuncompose.model.FavoriteIdEntity
 interface FavoriteRocketDAO {
 
     @Query("SELECT * FROM FavoriteIdEntity")
-    fun getAllRockets(): MutableList<FavoriteIdEntity>
+    suspend fun getAllRockets(): MutableList<FavoriteIdEntity>
 
     @Query("INSERT INTO FavoriteIdEntity(favoriteRocketId) VALUES( :favoriteRocketId)")
-    fun insertRocket(favoriteRocketId: String)
+    suspend fun insertRocket(favoriteRocketId: String) : Unit
 
     @Query("DELETE FROM FavoriteIdEntity WHERE favoriteRocketId = :favoriteRocketId")
-    fun deleteRocket(favoriteRocketId: String)
+    suspend fun deleteRocket(favoriteRocketId: String)
 }

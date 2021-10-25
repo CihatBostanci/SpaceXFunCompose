@@ -18,7 +18,6 @@ import kotlinx.coroutines.InternalCoroutinesApi
 fun SpaceXFun(viewModel: SpaceXViewModel) {
 
     val itemList: List<AllRocketResponse> by viewModel.rocketList.observeAsState(listOf())
-    val loading = viewModel.isRocketProgress.value
     val favoriteList: List<FavoriteIdEntity> by viewModel.favoriteRocketListLiveData.observeAsState(listOf())
 
     Row(modifier = Modifier.fillMaxSize()) {
