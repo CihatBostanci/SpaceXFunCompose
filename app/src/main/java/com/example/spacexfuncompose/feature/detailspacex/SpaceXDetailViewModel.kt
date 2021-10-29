@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.spacexfuncompose.base.BaseViewModel
 import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
 import com.example.spacexfuncompose.model.FavoriteIdEntity
+import com.example.spacexfuncompose.navigation.NavigationCommand
+import com.example.spacexfuncompose.navigation.NavigationDirections
+import com.example.spacexfuncompose.navigation.NavigationManager
 import com.example.spacexfuncompose.usecases.AddRocketToFavoriteUseCase
 import com.example.spacexfuncompose.usecases.DeleteRocketToFavoriteUseCase
 import com.example.spacexfuncompose.usecases.GetFavoriteRocketUseCase
@@ -20,51 +23,18 @@ import javax.inject.Inject
 @InternalCoroutinesApi
 @HiltViewModel
 class SpaceXDetailViewModel @Inject constructor(
-    private val spaceXUseCase: SpaceXUseCase
+    private val spaceXUseCase: SpaceXUseCase,
+    private val navigationManager: NavigationManager
 ) : BaseViewModel() {
 
     companion object {
         private const val TAG = "SpaceXDetailViewModel"
     }
 
-    private var _favoriteRocketList: MutableLiveData<MutableList<FavoriteIdEntity>> =
-        MutableLiveData()
-    val favoriteRocketListLiveData: LiveData<MutableList<FavoriteIdEntity>> get() = _favoriteRocketList
-
-    private var _isFavorite: MutableLiveData<Boolean> =
-        MutableLiveData()
-    val isFavoriteLiveData: LiveData<Boolean> get() = _isFavorite
-
-    fun getFavoriteRocketList(id: String?) = launchDataLoad {
-        spaceXUseCase.getFavoriteRocketUseCase.execute(GetFavoriteRocketUseCase.Request())
-            .onStart {
-                Log.d(TAG, "On start favorite")
-            }
-            .onCompletion {
-                Log.d(TAG, "On Completion favorite")
-            }
-            .catch {
-                Log.d(TAG, "On Error favorite")
-            }
-            .collect {
-                Log.d(TAG, "On Collect favorite")
-                var isFavorite = false
-                 if(id.isNullOrEmpty().not()){
-                    it.forEach {
-                        if(it.favoriteRocketId == id){
-                            isFavorite = true
-                        }
-                    }
-                }
-                _isFavorite.postValue(isFavorite)
-
-                _favoriteRocketList.postValue(it)
-            }
-    }
-
     fun addRocketToFavorite(rocketId: String) = launchDataLoad {
         spaceXUseCase.addRocketToFavoriteUseCase.execute(AddRocketToFavoriteUseCase.Request(rocketId))
             .onStart {
+
                 Log.d(TAG, "On start favorite create")
             }
             .onCompletion {
@@ -96,6 +66,10 @@ class SpaceXDetailViewModel @Inject constructor(
             .collect {
                 Log.d("Cihat Log:", " favorite deleted:$rocketId")
             }
+    }
+
+    fun navigateSpaceX(){
+        navigationManager.navigate(NavigationDirections.SpaceX)
     }
 
 }

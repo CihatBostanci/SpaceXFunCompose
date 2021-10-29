@@ -19,7 +19,6 @@ fun SpaceXFun(viewModel: SpaceXViewModel) {
 
     val itemList: List<AllRocketResponse> by viewModel.rocketList.observeAsState(listOf())
     val favoriteList: List<FavoriteIdEntity> by viewModel.favoriteRocketListLiveData.observeAsState(listOf())
-    viewModel.getFavoriteRocketList()
     Row(modifier = Modifier.fillMaxSize()) {
         LazyRow {
             items(itemList) { item ->

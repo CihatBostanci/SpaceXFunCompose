@@ -3,21 +3,19 @@ package com.example.spacexfuncompose
 import android.annotation.SuppressLint
 import android.graphics.Point
 import android.os.Bundle
-import android.widget.ProgressBar
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatDialog
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.spacexfuncompose.base.BaseViewModel
-import com.example.spacexfuncompose.customcomponent.ProgressLoadingIndicator
 import com.example.spacexfuncompose.feature.detailspacex.SpaceXDetail
+import com.example.spacexfuncompose.feature.detailspacex.SpaceXDetailViewModel
 import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXFun
+import com.example.spacexfuncompose.feature.spacex.presentation.SpaceXViewModel
 import com.example.spacexfuncompose.model.AllRocketResponse
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
@@ -28,7 +26,6 @@ import com.example.spacexfuncompose.ui.theme.SpaceXFunComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
-import javax.inject.Named
 
 @InternalCoroutinesApi
 @AndroidEntryPoint
@@ -66,17 +63,30 @@ class MainActivity : ComponentActivity() {
             startDestination = NavigationDirections.SpaceX.destination
         ) {
             composable(NavigationDirections.SpaceX.destination) {
-                SpaceXFun(hiltViewModel())
+                val spaceXViewModel = hiltViewModel() as SpaceXViewModel
+                spaceXViewModel.getFavoriteRocketList()
+                SpaceXFun(spaceXViewModel)
             }
             composable(NavigationDirections.SpaceXDetail.destination) {
-                val arguments =   navController.previousBackStackEntry?.arguments
+                val arguments = navController.previousBackStackEntry?.arguments
                 arguments?.let {
                     val rocket = it.getParcelable<AllRocketResponse>("rocket")
                     val isFavorite = it.getBoolean("isFavorite")
-                    SpaceXDetail(hiltViewModel(), rocket,isFavorite = isFavorite )
+                    val spaceXDetail = hiltViewModel() as SpaceXDetailViewModel
+                    SpaceXDetail(
+                        spaceXDetail, rocket, isFavorite = isFavorite
+                    ) {
+                        spaceXDetail.navigateSpaceX()
+                    }
                 }
             }
         }
+        NavigationObserve(navController)
+
+    }
+
+    @Composable
+    private fun NavigationObserve(navController: NavHostController) {
         //observation of destination
         navigationManager.commands.collectAsState().value.also { command ->
             if (command.destination.isNotEmpty()) {
@@ -89,12 +99,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        //Change Default Navigate
-        navigationManager.commands.value = NavigationDirections.Default
     }
 
     private fun screenSizeArranger() {
