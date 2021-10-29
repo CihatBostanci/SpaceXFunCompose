@@ -69,12 +69,12 @@ class MainActivity : ComponentActivity() {
                 SpaceXFun(hiltViewModel())
             }
             composable(NavigationDirections.SpaceXDetail.destination) {
-                val rocket =
-                    navController.previousBackStackEntry?.arguments?.getParcelable<AllRocketResponse>(
-                        "rocket"
-                    )
-
-                SpaceXDetail(hiltViewModel(), rocket)
+                val arguments =   navController.previousBackStackEntry?.arguments
+                arguments?.let {
+                    val rocket = it.getParcelable<AllRocketResponse>("rocket")
+                    val isFavorite = it.getBoolean("isFavorite")
+                    SpaceXDetail(hiltViewModel(), rocket,isFavorite = isFavorite )
+                }
             }
         }
         //observation of destination

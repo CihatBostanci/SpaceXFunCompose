@@ -35,11 +35,7 @@ class SpaceXDetailViewModel @Inject constructor(
         MutableLiveData()
     val isFavoriteLiveData: LiveData<Boolean> get() = _isFavorite
 
-    init {
-        getFavoriteRocketList()
-    }
-
-    private fun getFavoriteRocketList() = launchDataLoad {
+    fun getFavoriteRocketList(id: String?) = launchDataLoad {
         spaceXUseCase.getFavoriteRocketUseCase.execute(GetFavoriteRocketUseCase.Request())
             .onStart {
                 Log.d(TAG, "On start favorite")
@@ -52,11 +48,16 @@ class SpaceXDetailViewModel @Inject constructor(
             }
             .collect {
                 Log.d(TAG, "On Collect favorite")
-                if (it.size >= 1) {
-                    _isFavorite.postValue(true)
-                } else {
-                    _isFavorite.postValue(false)
+                var isFavorite = false
+                 if(id.isNullOrEmpty().not()){
+                    it.forEach {
+                        if(it.favoriteRocketId == id){
+                            isFavorite = true
+                        }
+                    }
                 }
+                _isFavorite.postValue(isFavorite)
+
                 _favoriteRocketList.postValue(it)
             }
     }

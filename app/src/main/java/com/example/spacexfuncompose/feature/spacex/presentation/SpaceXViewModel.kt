@@ -48,10 +48,9 @@ class SpaceXViewModel @Inject constructor(
 
     init {
         getSpaceXRockets()
-        getFavoriteRocketList()
     }
 
-    private fun getFavoriteRocketList() = launchDataLoad {
+    fun getFavoriteRocketList() = launchDataLoad {
 
         spaceXUseCase.getFavoriteRocketUseCase.execute(
             GetFavoriteRocketUseCase.Request()
@@ -88,12 +87,13 @@ class SpaceXViewModel @Inject constructor(
             }
     }
 
-    fun goToDetail(spaceXViewItem: AllRocketResponse) {
+    fun goToDetail(spaceXViewItem: AllRocketResponse, isFavorite: Boolean) {
         Log.d(TAG, "Go To Detail")
         navigationManager.navigate(
             NavigationDirections.SpaceXDetail.also {
                 it.arguments.apply {
                     putParcelable("rocket", spaceXViewItem)
+                    putBoolean("isFavorite", isFavorite)
                 }
             }
         )

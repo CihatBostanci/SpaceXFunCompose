@@ -11,7 +11,7 @@ interface FavoriteRocketDAO {
     suspend fun getAllRockets(): MutableList<FavoriteIdEntity>
 
     @Query("INSERT INTO FavoriteIdEntity(favoriteRocketId) VALUES( :favoriteRocketId)")
-    suspend fun insertRocket(favoriteRocketId: String) : Unit
+    suspend fun insertRocket(favoriteRocketId: String)
 
     @Query("DELETE FROM FavoriteIdEntity WHERE favoriteRocketId = :favoriteRocketId")
     suspend fun deleteRocket(favoriteRocketId: String)

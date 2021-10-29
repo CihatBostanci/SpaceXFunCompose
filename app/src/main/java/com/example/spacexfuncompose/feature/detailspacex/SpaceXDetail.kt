@@ -24,20 +24,16 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @Composable
 fun SpaceXDetail(
     viewModel: SpaceXDetailViewModel,
-    rocket: AllRocketResponse?
+    rocket: AllRocketResponse?,
+    isFavorite: Boolean
 ) {
-
-    Log.d("Cİhat Logged", viewModel.isFavoriteLiveData.value.toString())
-
-    val isFavoriteState: State<Boolean> = viewModel.isFavoriteLiveData.observeAsState(false)
+    val (isChecked, setChecked) = remember { mutableStateOf(isFavorite) }
 
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),
         horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
-        var (isChecked, setChecked) = remember { mutableStateOf(isFavoriteState) }
 
         Row(
             modifier = Modifier
@@ -60,7 +56,7 @@ fun SpaceXDetail(
         }
 
         Card(
-            backgroundColor = if (isChecked.value) darkGray else lightGray,
+            backgroundColor = if (isChecked) darkGray else lightGray,
             shape = RoundedCornerShape(Dimens.dimen_2),
             modifier = Modifier
                 .height((1.5 * ScreenSizeManager.screenHeightDp / 5).dp)
@@ -69,26 +65,36 @@ fun SpaceXDetail(
         ) {
             Column {
                 SpacerSmall()
-                HeaderText(
-                    text = rocket?.name,
-                    modifier = Modifier.align(CenterHorizontally)
-                )
-                SpacerMedium()
-                SimpleText(text = rocket?.description, modifier = Modifier.padding(Dimens.dimen_1))
-                SpacerBig()
-                FavoriteButton(
-                    modifier = Modifier.align(Alignment.End),
-                    isChecked = isChecked?.value ?: run { false },
-                    onClick = {
-                        setChecked(isChecked.apply { !value })
-                        rocket?.let {
-                            when (isChecked.value) {
-                                false -> viewModel.addRocketToFavorite(it.id)
-                                true -> viewModel.deleteRocketToFavorite(it.id)
+                Row {
+                    HeaderText(
+                        text = rocket?.name,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .weight(2f)
+                    )
+                    FavoriteButton(
+                        modifier = Modifier.weight(1f),
+                        isChecked = isChecked,
+                        onClick = {
+                            Log.d("Cihat Logged detail", isChecked.toString())
+                            setChecked(!isChecked)
+                            Log.d("Cihat Logged detail", isChecked.toString())
+                            rocket?.let {
+                                when (isChecked) {
+                                    false -> viewModel.deleteRocketToFavorite(it.id)
+                                    true -> viewModel.addRocketToFavorite(it.id)
+                                }
                             }
                         }
-                    }
-                )
+                    )
+                }
+                Row {
+                    SpacerMedium()
+                    SimpleText(
+                        text = rocket?.description,
+                        modifier = Modifier.padding(Dimens.dimen_1)
+                    )
+                }
             }
         }
     }

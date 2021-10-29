@@ -1,5 +1,6 @@
 package com.example.spacexfuncompose.feature.spacex.presentation
 
+import android.graphics.Paint
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,8 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.unit.dp
 import com.example.spacexfuncompose.customcomponent.*
 import com.example.spacexfuncompose.model.AllRocketResponse
@@ -44,7 +50,7 @@ fun SpaceXFunItem(
                 .align(CenterHorizontally)
                 .clickable(onClick = {
                     Log.d("Cihat", "clicked")
-                    viewModel.goToDetail(spaceXViewItem)
+                    viewModel.goToDetail(spaceXViewItem, isChecked)
                 })
             // .padding(Dimens.dimen_2)
         )
@@ -60,24 +66,28 @@ fun SpaceXFunItem(
         ) {
             Column {
                 SpacerSmall()
-                HeaderText(
-                    text = spaceXViewItem.name,
-                    modifier = Modifier.align(CenterHorizontally)
-                )
-                SpacerMedium()
-                SimpleText(text = spaceXViewItem.description)
-                SpacerBig()
-                FavoriteButton(
-                    modifier = Modifier.align(Alignment.End),
-                    isChecked = isChecked,
-                    onClick = {
-                        setChecked(!isChecked)
-                        when (isChecked) {
-                            false -> viewModel.addRocketToFavorite(spaceXViewItem.id)
-                            true -> viewModel.deleteRocketToFavorite(spaceXViewItem.id)
+                Row {
+
+                    HeaderText(
+                        text = spaceXViewItem.name,
+                        modifier = Modifier.align(CenterVertically).weight(2f)
+                    )
+                    FavoriteButton(
+                        modifier = Modifier.weight(1f),
+                        isChecked = isChecked,
+                        onClick = {
+                            setChecked(!isChecked)
+                            when (isChecked) {
+                                false -> viewModel.addRocketToFavorite(spaceXViewItem.id)
+                                true -> viewModel.deleteRocketToFavorite(spaceXViewItem.id)
+                            }
                         }
-                    }
-                )
+                    )
+                }
+                Row {
+                    SpacerMedium()
+                    SimpleText(text = spaceXViewItem.description)
+                }
             }
         }
     }
