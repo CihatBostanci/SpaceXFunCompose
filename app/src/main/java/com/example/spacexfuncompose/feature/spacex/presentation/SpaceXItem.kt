@@ -1,7 +1,5 @@
 package com.example.spacexfuncompose.feature.spacex.presentation
 
-import android.graphics.Paint
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,13 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
-import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.unit.dp
 import com.example.spacexfuncompose.customcomponent.*
 import com.example.spacexfuncompose.model.AllRocketResponse
@@ -33,9 +26,10 @@ fun SpaceXFunItem(
     spaceXViewItem: AllRocketResponse,
     isFavorite: Boolean
 ) {
-
     val (isChecked, setChecked) = remember { mutableStateOf(isFavorite) }
-
+    val goToDetail = {
+        viewModel.goToDetail(spaceXViewItem, isChecked)
+    }
     Column(
         modifier = Modifier.padding(Dimens.dimen_1),
         horizontalAlignment = CenterHorizontally,
@@ -48,41 +42,38 @@ fun SpaceXFunItem(
                 .height((2.5 * ScreenSizeManager.screenHeightDp / 5).dp)
                 .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
                 .align(CenterHorizontally)
-                .clickable(onClick = {
-                    Log.d("Cihat", "clicked")
-                    viewModel.goToDetail(spaceXViewItem, isChecked)
-                })
-            // .padding(Dimens.dimen_2)
+                .clickable(onClick = goToDetail)
         )
 
         Card(
             backgroundColor = if (isChecked) darkGray else lightGray,
             shape = RoundedCornerShape(Dimens.dimen_2),
             modifier = Modifier
-                // .padding(start = Dimens.dimen_2, end = Dimens.dimen_2, bottom = Dimens.dimen_2)
                 .height((1.5 * ScreenSizeManager.screenHeightDp / 5).dp)
                 .width((4 * ScreenSizeManager.screenWidthDp / 5).dp)
                 .align(CenterHorizontally)
+                .clickable(onClick = goToDetail)
         ) {
             Column {
-                SpacerSmall()
-                Row {
-
+                Row(Modifier.fillMaxWidth()) {
                     HeaderText(
                         text = spaceXViewItem.name,
-                        modifier = Modifier.align(CenterVertically).weight(2f)
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .weight(2f)
                     )
-                    FavoriteButton(
-                        modifier = Modifier.weight(1f),
-                        isChecked = isChecked,
-                        onClick = {
-                            setChecked(!isChecked)
-                            when (isChecked) {
-                                false -> viewModel.addRocketToFavorite(spaceXViewItem.id)
-                                true -> viewModel.deleteRocketToFavorite(spaceXViewItem.id)
+                    Row(horizontalArrangement = Arrangement.End) {
+                        FavoriteButton(
+                            isChecked = isChecked,
+                            onClick = {
+                                setChecked(!isChecked)
+                                when (isChecked) {
+                                    false -> viewModel.addRocketToFavorite(spaceXViewItem.id)
+                                    true -> viewModel.deleteRocketToFavorite(spaceXViewItem.id)
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
                 Row {
                     SpacerMedium()

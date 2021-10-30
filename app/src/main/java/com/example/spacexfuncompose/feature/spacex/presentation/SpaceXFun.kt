@@ -27,7 +27,6 @@ fun SpaceXFun(viewModel: SpaceXViewModel) {
                 )
             }
         }
-        //ProgressLoadingIndicator(isDisplayed = loading)
     }
 }
 

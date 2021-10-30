@@ -1,17 +1,12 @@
 package com.example.spacexfuncompose.feature.detailspacex
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.spacexfuncompose.base.BaseViewModel
 import com.example.spacexfuncompose.feature.spacex.domain.SpaceXUseCase
-import com.example.spacexfuncompose.model.FavoriteIdEntity
-import com.example.spacexfuncompose.navigation.NavigationCommand
 import com.example.spacexfuncompose.navigation.NavigationDirections
 import com.example.spacexfuncompose.navigation.NavigationManager
 import com.example.spacexfuncompose.usecases.AddRocketToFavoriteUseCase
 import com.example.spacexfuncompose.usecases.DeleteRocketToFavoriteUseCase
-import com.example.spacexfuncompose.usecases.GetFavoriteRocketUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -53,10 +48,9 @@ class SpaceXDetailViewModel @Inject constructor(
             DeleteRocketToFavoriteUseCase.Request(
                 rocketId
             )
-        )
-            .onStart {
-                Log.d(TAG, "On start favorite create")
-            }
+        ).onStart {
+            Log.d(TAG, "On start favorite create")
+        }
             .onCompletion {
                 Log.d(TAG, "On Completion favorite create")
             }
@@ -64,11 +58,11 @@ class SpaceXDetailViewModel @Inject constructor(
                 Log.d(TAG, "On Error favorite create")
             }
             .collect {
-                Log.d("Cihat Log:", " favorite deleted:$rocketId")
+                Log.d(TAG, " favorite deleted:$rocketId")
             }
     }
 
-    fun navigateSpaceX(){
+    fun navigateSpaceX() {
         navigationManager.navigate(NavigationDirections.SpaceX)
     }
 

@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.spacexfuncompose.ui.theme.Dimens
 
-
 // Spacer
 @Composable
 fun SpacerMedium() = Spacer(modifier = Modifier.padding(Dimens.dimen_1))

@@ -2,7 +2,6 @@ package com.example.spacexfuncompose.base
 
 import kotlinx.coroutines.flow.Flow
 
-
 /**
 * @author by cihat.bostanci
 * [BaseUseCase] abstracts all Use Cases

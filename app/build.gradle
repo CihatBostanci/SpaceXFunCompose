@@ -101,17 +101,11 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:$navigationCompose"
     implementation "androidx.navigation:navigation-compose:$compose_version"
 
-
-    //Data Store
-    // Preferences DataStore
-    implementation "androidx.datastore:datastore-preferences:$dataStoreVersion"
-
     //Room Database
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
-
 }
 kapt {
     correctErrorTypes true

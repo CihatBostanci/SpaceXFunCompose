@@ -1,6 +1,5 @@
 package com.example.spacexfuncompose.feature.detailspacex
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -68,8 +67,6 @@ fun SpaceXDetail(
                 .padding(Dimens.dimen_1)
         ) {
             Column {
-                SpacerSmall()
-
                 Row(Modifier.fillMaxWidth()) {
                     HeaderText(
                         text = rocket?.name,
@@ -82,9 +79,7 @@ fun SpaceXDetail(
                             modifier = Modifier,
                             isChecked = isChecked,
                             onClick = {
-                                Log.d("Cihat Logged detail", isChecked.toString())
                                 setChecked(!isChecked)
-                                Log.d("Cihat Logged detail", isChecked.toString())
                                 rocket?.let {
                                     when (isChecked) {
                                         false -> viewModel.addRocketToFavorite(it.id)
